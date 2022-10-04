@@ -1,0 +1,36 @@
+{
+  "name": "cinefilms-api",
+  "version": "1.0.0",
+  "description": "Cinema management API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ernestojv/cinefilms-api.git"
+  },
+  "author": "ernestoj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ernestojv/cinefilms-api/issues"
+  },
+  "homepage": "https://github.com/ernestojv/cinefilms-api#readme",
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "bcrypt": "^5.0.1",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "express": "^4.18.1",
+    "joi": "^17.6.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.20",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "prettier": "^2.7.1"
+  }
+}
