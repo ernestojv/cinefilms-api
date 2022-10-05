@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const config = require('./config/config');
-
+const dbo = require('./db/connection');
 
 app.use(express.json());
 
@@ -24,7 +24,15 @@ app.get('/', (req, res) => {
     res.send('this is cinefilms-api');
 });
 
-
-app.listen(config.port, () => {
-    console.log(`Server is running on port: ${config.port}`);
+dbo.connectToServer((error) => {
+    if(error) {
+        // eslint-disable-next-line no-console
+        console.log(error);
+        process.exit();
+    }
+    app.listen(config.port, () => {
+        // eslint-disable-next-line no-console
+        console.log(`Server is running on port: ${config.port}`);
+    });
 });
+
