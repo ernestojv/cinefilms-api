@@ -16,14 +16,14 @@ class Show {
         return db.collection('shows').findOne({ _id: id });
     }
 
-    static async getShowByMovieId(id) {
+    static async getShowsByMovieId(movieId) {
         const db = await dbo.getDb();
-        return db.collection('shows').find({ movieId: id }).toArray();
+        return db.collection('shows').find({ movieId: movieId }).toArray();
     }
 
-    static async getShowByTheaterId(id) {
+    static async getShowsByTheaterId(theaterId) {
         const db = await dbo.getDb();
-        return db.collection('shows').find({ theaterId: id }).toArray();
+        return db.collection('shows').find({ theaterId: theaterId }).toArray();
     }
 
     static async updateShow(id, show) {

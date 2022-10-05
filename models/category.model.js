@@ -16,6 +16,11 @@ class Category {
         return db.collection('categories').findOne({ _id: id });
     }
 
+    static async getCategoryByName(name) {
+        const db = await dbo.getDb();
+        return db.collection('categories').findOne({ name: name });
+    }
+
     static async updateCategory(id, category) {
         const db = await dbo.getDb();
         return db.collection('categories').updateOne({ _id: id }, { $set: category });
