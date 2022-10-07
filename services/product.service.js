@@ -3,10 +3,6 @@ const Product = require('../models/product.model');
 
 class ProductService {
     async addProduct(product) {
-        const existingProduct = await Product.getProductByName(product.name);
-        if (existingProduct) {
-            throw boom.conflict('Product already exists');
-        }
         return Product.addProduct(product);
     }
 

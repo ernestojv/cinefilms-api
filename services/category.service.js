@@ -3,10 +3,6 @@ const Category = require('../models/category.model');
 
 class CategoryService {
     async addCategory(category) {
-        const existingCategory = await Category.getCategoryByName(category.name);
-        if (existingCategory) {
-            throw boom.conflict('Category already exists');
-        }
         return Category.addCategory(category);
     }
 

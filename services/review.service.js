@@ -3,10 +3,6 @@ const Review = require('../models/review.model');
 
 class ReviewService {
     async addReview(review) {
-        const existingReview = await Review.getReviewByName(review.name);
-        if (existingReview) {
-            throw boom.conflict('Review already exists');
-        }
         return Review.addReview(review);
     }
 
@@ -23,19 +19,11 @@ class ReviewService {
     }
 
     async getReviewsByMovie(movieId) {
-        const review = await Review.getReviewByMovie(movieId);
-        if (!review) {
-            throw boom.notFound('Review not found');
-        }
-        return review;
+        return Review.getReviewsByMovie(movieId);
     }
 
     async getReviewsByUser(userId) {
-        const review = await Review.getReviewByUser(userId);
-        if (!review) {
-            throw boom.notFound('Review not found');
-        }
-        return review;
+        return Review.getReviewsByUser(userId);
     }
 
     async updateReview(id, review) {

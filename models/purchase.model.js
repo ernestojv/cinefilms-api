@@ -16,12 +16,12 @@ class Purchase {
         return db.collection('purchases').findOne({ _id: id });
     }
 
-    static async getPurchaseByUserId(id) {
+    static async getPurchasesByUserId(id) {
         const db = await dbo.getDb();
         return db.collection('purchases').find({ userId: id }).toArray();
     }
 
-    static async getPurchaseByShowId(id) {
+    static async getPurchasesByShowId(id) {
         const db = await dbo.getDb();
         return db.collection('purchases').find({ showId: id }).toArray();
     }

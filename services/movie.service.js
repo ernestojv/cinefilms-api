@@ -3,11 +3,6 @@ const Movie = require('../models/movie.model');
 
 class MovieService {
     async addMovie(movie) {
-        const existingMovie = await Movie.getMovieByName(movie.name);
-        delete existingMovie._id;
-        if (existingMovie === movie) {
-            throw boom.conflict('Movie already exists');
-        }
         return Movie.addMovie(movie);
     }
 
@@ -49,7 +44,7 @@ class MovieService {
 
     async getMoviesByCategory(categoryId) {
         const movies = await Movie.getMoviesByCategory(categoryId);
-        if (!movies) {
+        if (movies.length === 0) {
             throw boom.notFound('Movies not found for this category');
         }
         return movies;

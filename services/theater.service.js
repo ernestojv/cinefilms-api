@@ -3,10 +3,6 @@ const Theater = require('../models/theater.model');
 
 class TheaterService {
     async addTheater(theater) {
-        const existingTheater = await Theater.getTheaterByName(theater.name);
-        if (existingTheater) {
-            throw boom.conflict('Theater already exists');
-        }
         return Theater.addTheater(theater);
     }
 

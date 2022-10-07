@@ -3,10 +3,6 @@ const Show = require('../models/show.model');
 
 class ShowService {
     async addShow(show) {
-        const existingShow = await Show.getShowByName(show.name);
-        if (existingShow) {
-            throw boom.conflict('Show already exists');
-        }
         return Show.addShow(show);
     }
 
@@ -23,19 +19,11 @@ class ShowService {
     }
 
     async getShowsByMovieId(movieId) {
-        const show = await Show.getShowsByMovieId(movieId);
-        if (!show) {
-            throw boom.notFound('Show not found');
-        }
-        return show;
+        return Show.getShowsByMovieId(movieId);
     }
 
     async getShowsByTheaterId(id) {
-        const show = await Show.getShowsByTheaterId(id);
-        if (!show) {
-            throw boom.notFound('Show not found');
-        }
-        return show;
+        return Show.getShowsByTheaterId(id);
     }
 
     async updateShow(id, show) {
