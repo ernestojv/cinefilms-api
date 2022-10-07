@@ -4,6 +4,10 @@ const cors = require('cors');
 const config = require('./config/config');
 const dbo = require('./db/connection');
 
+const { errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
+
+process.env.TZ = 'America/Guatemala';
+
 app.use(express.json());
 
 const whiteList = ['http://localhost:4200', 'localhost:4200', '127.0.0.1:4200'];
@@ -19,6 +23,11 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions));
+
+
+
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.get('/', (req, res) => {
     res.send('this is cinefilms-api');
