@@ -1,5 +1,5 @@
 const dbo = require('../db/connection');
-
+const { ObjectId } = require('mongodb');
 class Movie {
     static async addMovie(movie) {
         const db = await dbo.getDb();
@@ -13,6 +13,7 @@ class Movie {
 
     static async getMovie(id) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('movies').findOne({ _id: id });
     }
 
@@ -59,11 +60,13 @@ class Movie {
 
     static async updateMovie(id, movie) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('movies').updateOne({ _id: id }, { $set: movie });
     }
 
     static async deleteMovie(id) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('movies').deleteOne({ _id: id });
     }
 
