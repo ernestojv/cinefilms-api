@@ -4,7 +4,7 @@ const PurchaseService = require('../../services/purchase.service');
 const fakePurchases = [
     {
         _id: '1',
-        dateTime: '2020-10-10T10:00:00.000Z',
+        date: '2020-10-10',
         showId: '1',
         userId: '1',
         seats: ['A1', 'A2'],
@@ -18,6 +18,8 @@ jest.mock('../../models/purchase.model', () => ({
     getPurchase: jest.fn((id) => fakePurchases.find((purchase) => purchase._id === id)),
     getPurchasesByUserId: jest.fn((id) => fakePurchases.filter((purchase) => purchase.userId === id)),
     getPurchasesByShowId: jest.fn((id) => fakePurchases.filter((purchase) => purchase.showId === id)),
+    getPurchasesByDate: jest.fn((date) => fakePurchases.filter((purchase) => purchase.date === date)),
+    getPurchasesByDateRange: jest.fn((startDate, endDate) => fakePurchases.filter((purchase) => purchase.date >= startDate && purchase.date <= endDate)),
     updatePurchase: jest.fn(() => fakePurchases[0]),
     deletePurchase: jest.fn(() => fakePurchases[0])
 }));
@@ -32,7 +34,7 @@ describe('Test purchase service', () => {
     describe('Test addPurchase', () => {
         test('should return a purchase', async () => {
             const purchase = {
-                dateTime: '2020-10-10T10:00:00.000Z',
+                date: '2020-10-10',
                 showId: '1',
                 userId: '1',
                 seats: ['A1', 'A2'],
@@ -90,10 +92,35 @@ describe('Test purchase service', () => {
         });
     });
 
+    describe('Test getPurchasesByDate', () => {
+        test('should return an array of purchases', async () => {
+            const result = await service.getPurchasesByDate('2020-10-10');
+            expect(result).toEqual(expect.any(Array));  
+        });
+
+        test('should return an empty array if there are no purchases', async () => {
+            const result = await service.getPurchasesByDate('2020-10-11');
+            expect(result).toEqual([]);
+        });
+    });
+
+    describe('Test getPurchasesByDateRange', () => {
+        test('should return an array of purchases', async () => {
+            const result = await service.getPurchasesByDateRange('2020-10-10', '2020-10-10');
+            expect(result).toEqual(expect.any(Array));
+        });
+
+        test('should return an empty array if there are no purchases', async () => {
+            const result = await service.getPurchasesByDateRange('2020-10-11', '2020-10-11');
+            expect(result).toEqual([]);
+        });
+    });
+
+
     describe('Test updatePurchase', () => {
         test('should return a purchase', async () => {
             const purchase = {
-                dateTime: '2020-10-10T10:00:00.000Z',
+                dateTime: '2020-10-10',
                 showId: '1',
                 userId: '1',
                 seats: ['A1', 'A2'],
@@ -105,7 +132,7 @@ describe('Test purchase service', () => {
 
         test('should throw an error if purchase does not exist', async () => {
             const purchase = {
-                dateTime: '2020-10-10T10:00:00.000Z',
+                dateTime: '2020-10-10',
                 showId: '1',
                 userId: '1',
                 seats: ['A1', 'A2'],

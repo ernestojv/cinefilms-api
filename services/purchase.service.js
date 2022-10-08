@@ -26,6 +26,14 @@ class PurchaseService {
         return Purchase.getPurchasesByShowId(id);
     }
 
+    async getPurchasesByDate(date) {
+        return Purchase.getPurchasesByDate(date);
+    }
+    
+    async getPurchasesByDateRange(startDate, endDate) {
+        return Purchase.getPurchasesByDateRange(startDate, endDate);
+    }
+
     async updatePurchase(id, purchase) {
         const oldPurchase = await Purchase.getPurchase(id);
         if (!oldPurchase) {

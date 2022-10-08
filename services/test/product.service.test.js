@@ -66,12 +66,12 @@ describe('Test product service', () => {
 
     describe('test for getProductByName', () => {
         test('should return a product', async () => {
-            const product = await service.getProductByName('Popcorn');
+            const product = await service.getProductsByName('Popcorn');
             expect(product).toEqual(expect.any(Array));
         });
 
         test('should return an empty array if there are no products', async () => {
-            const product = await service.getProductByName('Candy');
+            const product = await service.getProductsByName('Candy');
             expect(product).toEqual(expect.any(Array));
         });
     });
