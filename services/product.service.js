@@ -18,12 +18,8 @@ class ProductService {
         return product;
     }
 
-    async getProductByName(name) {
-        const product = await Product.getProductByName(name);
-        if (!product) {
-            throw boom.notFound('Product not found');
-        }
-        return product;
+    async getProductsByName(name) {
+        return Product.getProductsByName(name);
     }
 
     async updateProduct(id, product) {

@@ -1,49 +1,35 @@
 const express = require('express');
-const MovieService = require('../services/movie.service');
+const ProductService = require('../services/product.service');
 const validatorHandler = require('../middlewares/validator.handler');
 const { checkRoles } = require('../middlewares/auth.handler');
-const { createMovieSchema, updateMovieSchema, getMovieSchema } = require('../schemas/movie.schema');
+const { createProductSchema, updateProductSchema, getProductSchema } = require('../schemas/product.schema');
 const passport = require('passport');
 const router = express.Router();
-const service = new MovieService();
+const service = new ProductService();
 
 router.get('/',
     async (req, res, next) => {
         try {
-            const movies = await service.getMovies();
+            const products = await service.getProducts();
             res.status(200).json({
-                data: movies,
-                message: 'movies listed'
+                data: products,
+                message: 'products listed'
             });
         } catch (err) {
             next(err);
         }
     }
-);
+);  
 
 router.get('/name/:name',
     async (req, res, next) => {
         const { name } = req.params;
         try {
-            const movie = await service.getMovieByName(name);
+            const product = await service.getProductsByName(name);
             res.status(200).json({
-                data: movie,
-                message: 'movie retrieved'
-            });
-        } catch (err) {
-            next(err);
-        }
-    }
-);
+                data: product,
+                message: 'product retrieved'
 
-router.get('/category/:categoryId',
-    async (req, res, next) => {
-        const { categoryId } = req.params;
-        try {
-            const movies = await service.getMoviesByCategory(categoryId);
-            res.status(200).json({
-                data: movies,
-                message: 'movies listed'
             });
         } catch (err) {
             next(err);
@@ -52,14 +38,14 @@ router.get('/category/:categoryId',
 );
 
 router.get('/:id',
-    validatorHandler(getMovieSchema, 'params'),
+    validatorHandler(getProductSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params;
         try {
-            const movie = await service.getMovie(id);
+            const product = await service.getProduct(id);
             res.status(200).json({
-                data: movie,
-                message: 'movie retrieved'
+                data: product,
+                message: 'product retrieved'
             });
         } catch (err) {
             next(err);
@@ -70,14 +56,14 @@ router.get('/:id',
 router.post('/',
     passport.authenticate('jwt', { session: false }),
     checkRoles(['admin']),
-    validatorHandler(createMovieSchema, 'body'),
+    validatorHandler(createProductSchema, 'body'),
     async (req, res, next) => {
-        const { body: movie } = req;
+        const body = req.body;
         try {
-            const createdMovieId = await service.addMovie(movie);
+            const createdProduct = await service.addProduct(body);
             res.status(201).json({
-                data: createdMovieId,
-                message: 'movie created'
+                data: createdProduct,
+                message: 'product created'
             });
         } catch (err) {
             next(err);
@@ -88,16 +74,16 @@ router.post('/',
 router.put('/:id',
     passport.authenticate('jwt', { session: false }),
     checkRoles(['admin']),
-    validatorHandler(getMovieSchema, 'params'),
-    validatorHandler(updateMovieSchema, 'body'),
+    validatorHandler(getProductSchema, 'params'),
+    validatorHandler(updateProductSchema, 'body'),
     async (req, res, next) => {
         const { id } = req.params;
-        const { body: movie } = req;
+        const body = req.body;
         try {
-            const updatedMovieId = await service.updateMovie(id, movie);
+            const updatedProduct = await service.updateProduct(id, body);
             res.status(200).json({
-                data: updatedMovieId,
-                message: 'movie updated'
+                data: updatedProduct,
+                message: 'product updated'
             });
         } catch (err) {
             next(err);
@@ -108,14 +94,14 @@ router.put('/:id',
 router.delete('/:id',
     passport.authenticate('jwt', { session: false }),
     checkRoles(['admin']),
-    validatorHandler(getMovieSchema, 'params'),
+    validatorHandler(getProductSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params;
         try {
-            const deletedMovieId = await service.deleteMovie(id);
+            const deletedProduct = await service.deleteProduct(id);
             res.status(200).json({
-                data: deletedMovieId,
-                message: 'movie deleted'
+                data: deletedProduct,
+                message: 'product deleted'
             });
         } catch (err) {
             next(err);

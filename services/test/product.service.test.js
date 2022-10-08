@@ -15,7 +15,7 @@ jest.mock('../../models/product.model', () => ({
     addProduct: jest.fn(() => fakeProducts[0]),
     getProducts: jest.fn(() => fakeProducts),
     getProduct: jest.fn((id) => fakeProducts.find((product) => product._id === id)),
-    getProductByName: jest.fn((name) => fakeProducts.find((product) => product.name === name)),
+    getProductsByName: jest.fn((name) => fakeProducts.filter((product) => product.name === name)),
     updateProduct: jest.fn(() => fakeProducts[0]),
     deleteProduct: jest.fn(() => fakeProducts[0])
 }));
@@ -67,11 +67,12 @@ describe('Test product service', () => {
     describe('test for getProductByName', () => {
         test('should return a product', async () => {
             const product = await service.getProductByName('Popcorn');
-            expect(product).toEqual(expect.any(Object));
+            expect(product).toEqual(expect.any(Array));
         });
 
-        test('should throw an error if product does not exist', async () => {
-            await expect(service.getProductByName('Candy')).rejects.toThrow(Boom);
+        test('should return an empty array if there are no products', async () => {
+            const product = await service.getProductByName('Candy');
+            expect(product).toEqual(expect.any(Array));
         });
     });
 

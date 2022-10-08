@@ -1,4 +1,5 @@
 const dbo = require('../db/connection');
+const { ObjectId } = require('mongodb');
 
 class Product {
     static async addProduct(product) {
@@ -13,10 +14,11 @@ class Product {
 
     static async getProduct(id) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('products').findOne({ _id: id });
     }
 
-    static async getProductByName(name) {
+    static async getProductsByName(name) {
         const db = await dbo.getDb();
 
         let requestValues = name.split(' ');
@@ -59,11 +61,13 @@ class Product {
 
     static async updateProduct(id, product) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('products').updateOne({ _id: id }, { $set: product });
     }
 
     static async deleteProduct(id) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('products').deleteOne({ _id: id });
     }
 }
