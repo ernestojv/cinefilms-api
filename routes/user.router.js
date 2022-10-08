@@ -23,6 +23,51 @@ router.get('/',
         }
     });
 
+router.get('/admins',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
+    async (req, res, next) => {
+        try {
+            const users = await service.getAdmins();
+            res.status(200).json({
+                data: users,
+                message: 'admins listed'
+            });
+        } catch (err) {
+            next(err);
+        }
+    });
+
+router.get('/employees',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin']),
+    async (req, res, next) => {
+        try {
+            const users = await service.getEmployees();
+            res.status(200).json({
+                data: users,
+                message: 'employees listed'
+            });
+        } catch (err) {
+            next(err);
+        }
+    });
+
+router.get('/clients',
+    passport.authenticate('jwt', { session: false }),
+    checkRoles(['admin', 'employee']),
+    async (req, res, next) => {
+        try {
+            const users = await service.getClients();
+            res.status(200).json({
+                data: users,
+                message: 'clients listed'
+            });
+        } catch (err) {
+            next(err);
+        }
+    });
+
 router.get('/:email',
     passport.authenticate('jwt', { session: false }),
     checkRoles(['admin', 'employee', 'client']),
@@ -84,51 +129,6 @@ router.delete('/:email',
             res.status(200).json({
                 data: deletedUserId,
                 message: 'user deleted'
-            });
-        } catch (err) {
-            next(err);
-        }
-    });
-
-router.get('/admins',
-    passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin']),
-    async (req, res, next) => {
-        try {
-            const users = await service.getAdmins();
-            res.status(200).json({
-                data: users,
-                message: 'admins listed'
-            });
-        } catch (err) {
-            next(err);
-        }
-    });
-
-router.get('/employees',
-    passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin']),
-    async (req, res, next) => {
-        try {
-            const users = await service.getEmployees();
-            res.status(200).json({
-                data: users,
-                message: 'employees listed'
-            });
-        } catch (err) {
-            next(err);
-        }
-    });
-
-router.get('/clients',
-    passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee']),
-    async (req, res, next) => {
-        try {
-            const users = await service.getClients();
-            res.status(200).json({
-                data: users,
-                message: 'clients listed'
             });
         } catch (err) {
             next(err);

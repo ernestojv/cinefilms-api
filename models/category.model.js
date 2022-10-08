@@ -1,4 +1,5 @@
 const dbo = require('../db/connection');
+const { ObjectId } = require('mongodb');
 
 class Category {
     static async addCategory(category) {
@@ -13,6 +14,7 @@ class Category {
 
     static async getCategory(id) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('categories').findOne({ _id: id });
     }
 
@@ -23,11 +25,13 @@ class Category {
 
     static async updateCategory(id, category) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('categories').updateOne({ _id: id }, { $set: category });
     }
 
     static async deleteCategory(id) {
         const db = await dbo.getDb();
+        id = new ObjectId(id);
         return db.collection('categories').deleteOne({ _id: id });
     }
 }
