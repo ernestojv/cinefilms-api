@@ -13,7 +13,6 @@ const createUserSchema = Joi.object({
 });
 
 const updateUserSchema = Joi.object({
-    id: Joi.string().required(),
     name: name,
     email: email,
     password: password,
@@ -21,7 +20,7 @@ const updateUserSchema = Joi.object({
 });
 
 const getUserSchema = Joi.object({
-    id: Joi.string().required()
+    email: email.required()
 });
 
 module.exports = {

@@ -1,4 +1,4 @@
-const dbo = require('../db/conn');
+const dbo = require('../db/connection');
 
 class Category {
     static async addCategory(category) {

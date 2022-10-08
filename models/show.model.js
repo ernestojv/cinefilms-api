@@ -1,4 +1,4 @@
-const dbo = require('../db/conn');
+const dbo = require('../db/connection');
 
 class Show {
     static async addShow(show) {

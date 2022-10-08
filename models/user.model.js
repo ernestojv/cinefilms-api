@@ -1,4 +1,4 @@
-const dbo = require('../db/conn');
+const dbo = require('../db/connection');
 
 class User {
     static async addUser(user) {
@@ -21,14 +21,29 @@ class User {
         return db.collection('users').findOne({ email: email });
     }
 
-    static async updateUser(id, user) {
+    static async getAdmins() {
         const db = await dbo.getDb();
-        return db.collection('users').updateOne({ _id: id }, { $set: user });
+        return db.collection('users').find({ role: 'admin' }).toArray();
     }
 
-    static async deleteUser(id) {
+    static async getEmployees() {
         const db = await dbo.getDb();
-        return db.collection('users').deleteOne({ _id: id });
+        return db.collection('users').find({ role: 'employee' }).toArray();
+    }
+
+    static async getClients() {
+        const db = await dbo.getDb();
+        return db.collection('users').find({ role: 'client' }).toArray();
+    }
+
+    static async updateUser(email, user) {
+        const db = await dbo.getDb();
+        return db.collection('users').updateOne({ email: email }, { $set: user });
+    }
+
+    static async deleteUser(email) {
+        const db = await dbo.getDb();
+        return db.collection('users').deleteOne({ email: email });
     }
 }
 

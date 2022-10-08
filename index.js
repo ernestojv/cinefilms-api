@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const routerApi = require('./routes/index.js');
 const cors = require('cors');
 const config = require('./config/config');
 const dbo = require('./db/connection');
@@ -9,6 +10,8 @@ const { errorHandler, boomErrorHandler } = require('./middlewares/error.handler'
 process.env.TZ = 'America/Guatemala';
 
 app.use(express.json());
+
+require('./utils/auth');
 
 const whiteList = ['http://localhost:4200', 'localhost:4200', '127.0.0.1:4200'];
 const corsOptions = {
@@ -24,7 +27,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-
+routerApi(app);
 
 app.use(boomErrorHandler);
 app.use(errorHandler);
