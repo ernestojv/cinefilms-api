@@ -13,7 +13,6 @@ const createReviewSchema = Joi.object({
 });
 
 const updateReviewSchema = Joi.object({
-    id: Joi.string().required(),
     movieId: movieId,
     userId: userId,
     rating: rating,
