@@ -17,6 +17,7 @@ jest.mock('../../models/show.model', () => ({
     getShow: jest.fn((id) => fakeShows.find((show) => show._id === id)),
     getShowsByTheaterId: jest.fn((id) => fakeShows.filter((show) => show.theaterId === id)),
     getShowsByMovieId: jest.fn((id) => fakeShows.filter((show) => show.movieId === id)),
+    getShowsByDate: jest.fn((date) => fakeShows.filter((show) => show.dateTime.includes(date))),
     updateShow: jest.fn(() => fakeShows[0]),
     deleteShow: jest.fn(() => fakeShows[0])
 }));
@@ -80,6 +81,18 @@ describe('ShowService', () => {
 
         test('should return an empty array if no shows exist', async () => {
             const result = await service.getShowsByMovieId('2');
+            expect(result).toEqual([]);
+        });
+    });
+
+    describe('getShowsByDate', () => {
+        test('should return an array of shows', async () => {
+            const result = await service.getShowsByDate('2020-10-10');
+            expect(result).toEqual(fakeShows);
+        });
+
+        test('should return an empty array if no shows exist', async () => {
+            const result = await service.getShowsByDate('2020-10-11');
             expect(result).toEqual([]);
         });
     });

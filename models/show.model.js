@@ -1,5 +1,5 @@
 const dbo = require('../db/connection');
-
+const { ObjectId } = require('mongodb');
 class Show {
     static async addShow(show) {
         const db = await dbo.getDb();
@@ -13,6 +13,7 @@ class Show {
 
     static async getShow(id) {
         const db = await dbo.getDb();
+        id = ObjectId(id);
         return db.collection('shows').findOne({ _id: id });
     }
 
@@ -26,13 +27,20 @@ class Show {
         return db.collection('shows').find({ theaterId: theaterId }).toArray();
     }
 
+    static async getShowsByDate(date) {
+        const db = await dbo.getDb();
+        return db.collection('shows').find({ dateTime: { '$regex': date } }).toArray();
+    }
+
     static async updateShow(id, show) {
         const db = await dbo.getDb();
+        id = ObjectId(id);
         return db.collection('shows').updateOne({ _id: id }, { $set: show });
     }
 
     static async deleteShow(id) {
         const db = await dbo.getDb();
+        id = ObjectId(id);
         return db.collection('shows').deleteOne({ _id: id });
     }
 }

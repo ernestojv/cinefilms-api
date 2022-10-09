@@ -13,7 +13,6 @@ const createShowSchema = Joi.object({
 });
 
 const updateShowSchema = Joi.object({
-    id: Joi.string().required(),
     dateTime: dateTime,
     theaterId: theaterId,
     movieId: movieId,

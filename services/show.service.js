@@ -26,6 +26,10 @@ class ShowService {
         return Show.getShowsByTheaterId(id);
     }
 
+    async getShowsByDate(date) {
+        return Show.getShowsByDate(date);
+    }
+
     async updateShow(id, show) {
         const oldShow = await Show.getShow(id);
         if (!oldShow) {
