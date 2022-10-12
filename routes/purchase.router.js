@@ -25,7 +25,7 @@ router.get('/',
 
 router.get('/:id',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee', 'client']),
+    checkRoles(['admin', 'employee', 'user']),
     validatorHandler(getPurchaseSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params;
@@ -43,7 +43,7 @@ router.get('/:id',
 
 router.get('/user/:id',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee', 'client']),
+    checkRoles(['admin', 'employee', 'user']),
     validatorHandler(getPurchaseSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params;
@@ -62,7 +62,7 @@ router.get('/user/:id',
 
 router.get('/show/:id',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee']),
+    checkRoles(['admin', 'employee', 'user']),
     validatorHandler(getPurchaseSchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params;

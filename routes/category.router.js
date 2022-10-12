@@ -10,7 +10,7 @@ const service = new CategoryService();
 
 router.get('/',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee', 'client']),
+    checkRoles(['admin', 'employee', 'user']),
     async (req, res, next) => {
         try {
             const categories = await service.getCategories();
@@ -25,7 +25,7 @@ router.get('/',
 
 router.get('/name/:name',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee', 'client']),
+    checkRoles(['admin', 'employee', 'user']),
     async (req, res, next) => {
         const { name } = req.params;
         try {
@@ -41,7 +41,7 @@ router.get('/name/:name',
 
 router.get('/:id',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee', 'client']),
+    checkRoles(['admin', 'employee', 'user']),
     validatorHandler(getCategorySchema, 'params'),
     async (req, res, next) => {
         const { id } = req.params;
