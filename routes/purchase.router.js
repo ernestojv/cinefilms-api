@@ -114,7 +114,7 @@ router.get('/date/:startDate/:endDate',
 
 router.post('/',
     passport.authenticate('jwt', { session: false }),
-    checkRoles(['admin', 'employee', 'client']),
+    checkRoles(['admin', 'employee', 'user']),
     validatorHandler(createPurchaseSchema, 'body'),
     async (req, res, next) => {
         const { body: purchase } = req;
