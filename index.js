@@ -13,7 +13,7 @@ app.use(express.json());
 
 require('./utils/auth');
 
-const whiteList = ['http://localhost:4200', 'localhost:4200', '127.0.0.1:4200'];
+const whiteList = ['http://localhost:4200', 'localhost:4200', '127.0.0.1:4200', 'https://cinefilms-ffhufhaps-ernestojv.vercel.app/', 'cinefilms-ffhufhaps-ernestojv.vercel.app'];
 const corsOptions = {
     origin: (origin, callback) => {
         if (!origin || whiteList.indexOf(origin) !== -1) {
