@@ -1,8 +1,14 @@
 const boom = require('@hapi/boom');
 const Show = require('../models/show.model');
+const Theater = require('../models/theater.model');
+const Movie = require('../models/movie.model');
 
 class ShowService {
     async addShow(show) {
+        const movie = await Movie.getMovie(show.movieId);
+        const theater = await Theater.getTheater(show.theaterId);
+        show.movieId = movie;
+        show.theaterId = theater;
         return Show.addShow(show);
     }
 
@@ -19,11 +25,13 @@ class ShowService {
     }
 
     async getShowsByMovieId(movieId) {
-        return Show.getShowsByMovieId(movieId);
+        const movie = await Movie.getMovie(movieId);
+        return Show.getShowsByMovieId(movie);
     }
 
     async getShowsByTheaterId(id) {
-        return Show.getShowsByTheaterId(id);
+        const theater = await Theater.getTheater(id);
+        return Show.getShowsByTheaterId(theater);
     }
 
     async getShowsByDate(date) {
@@ -31,6 +39,10 @@ class ShowService {
     }
 
     async updateShow(id, show) {
+        const movie = await Movie.getMovie(show.movieId);
+        const theater = await Theater.getTheater(show.theaterId);
+        show.movieId = movie;
+        show.theaterId = theater;
         const oldShow = await Show.getShow(id);
         if (!oldShow) {
             throw boom.notFound('Show not found');
@@ -44,7 +56,7 @@ class ShowService {
             throw boom.notFound('Show not found');
         }
         return Show.deleteShow(id);
-    }   
+    }
 }
 
 module.exports = ShowService;

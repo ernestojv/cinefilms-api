@@ -25,7 +25,7 @@ class Purchase {
 
     static async getPurchasesByShowId(id) {
         const db = await dbo.getDb();
-        return db.collection('purchases').find({ showId: id }).toArray();
+        return db.collection('purchases').find({ "showId._id": { $exists : true }}, { "showId._id" : id }).toArray();
     }
 
     static async getPurchasesByDate(date) {

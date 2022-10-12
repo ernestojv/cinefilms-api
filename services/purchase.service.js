@@ -1,6 +1,6 @@
 const boom = require('@hapi/boom');
 const Purchase = require('../models/purchase.model');
-
+const Show = require('../models/show.model');
 class PurchaseService {
     async addPurchase(purchase) {
         return Purchase.addPurchase(purchase);
@@ -29,7 +29,7 @@ class PurchaseService {
     async getPurchasesByDate(date) {
         return Purchase.getPurchasesByDate(date);
     }
-    
+
     async getPurchasesByDateRange(startDate, endDate) {
         return Purchase.getPurchasesByDateRange(startDate, endDate);
     }

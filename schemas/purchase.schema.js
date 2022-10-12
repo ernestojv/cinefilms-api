@@ -1,10 +1,10 @@
 const Joi = require('joi');
 
 const date = Joi.date();
-const showId = Joi.string();
+const showId = Joi.object();
 const userId = Joi.string();
 const seats = Joi.array().items(Joi.string());
-const productsId = Joi.array().items(Joi.string());
+const productsId = Joi.array();
 
 const createPurchaseSchema = Joi.object({
     date: date.required(),

@@ -14,7 +14,7 @@ router.post('/login',
         try {
             const user = req.user;
             const payload = {
-                sub: user.email,
+                email: user.email,
                 role: user.role,
             }
             const token = jwt.sign(payload, config.jwtSecret);
@@ -31,7 +31,7 @@ router.get('/profile',
     async (req, res, next) => {
         try {
             let loggedUser = req.user;
-            let user = await userService.getUserByEmail(loggedUser.sub);
+            let user = await userService.getUserByEmail(loggedUser.email);
             delete user.password;
             delete user.email;
             loggedUser = { ...loggedUser, ...user };
